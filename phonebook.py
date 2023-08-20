@@ -11,6 +11,18 @@ menu="""
 """
 clear=lambda: os.system("cls")
 
+
+# Define the login credentials
+username = "admin"
+password = "admin"
+
+# Check if the user is authenticated
+def authenticate():
+    entered_username = input("Enter username: ")
+    entered_password = input("Enter password: ")
+    return entered_username == username and entered_password == password
+
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PATH=os.path.join(BASE_DIR,"database.txt")
 def validation():
@@ -62,19 +74,24 @@ def show_all():
     
 
 select=10
+authenticated = False
 while select !=0:
-    menus()
-    select=int(input('Enter Your Choice:'))
-    clear() 
-    if select==1:
-        name=input('Enter Name:')
-        number=input('Enter Number:')
-        add(name,number)
-    elif select==2:
-        name=input('Enter Name:')
-        search(name)
-    elif select==3:
-        name=input('Enter Name:')
-        delete(name)
-    elif select==4:
-        show_all()
+    if not authenticated:
+        authenticated = authenticate()
+
+    if authenticated:
+        menus()
+        select=int(input('Enter Your Choice:'))
+        clear() 
+        if select==1:
+            name=input('Enter Name:')
+            number=input('Enter Number:')
+            add(name,number)
+        elif select==2:
+            name=input('Enter Name:')
+            search(name)
+        elif select==3:
+            name=input('Enter Name:')
+            delete(name)
+        elif select==4:
+            show_all()
